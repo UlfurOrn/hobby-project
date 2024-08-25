@@ -1,0 +1,16 @@
+[GLOBAL]
+pants_version = "2.21.0"
+
+backend_packages = [
+    # Build Files (Pants)
+    "pants.backend.build_files.fmt.ruff",
+    # Python
+    "pants.backend.python",
+    "pants.backend.experimental.python.lint.ruff.check",
+    "pants.backend.experimental.python.lint.ruff.format",
+    "pants.backend.python.typecheck.mypy",
+]
+
+
+[python]
+interpreter_constraints = ['==3.12.*']
