@@ -1,7 +1,6 @@
 python_sources()
 
-
 pex_binary(
-    name="test",
+    name="main",
     entry_point="main.py",
 )

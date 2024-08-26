@@ -1,6 +1,7 @@
 [GLOBAL]
 pants_version = "2.21.0"
 
+# See a list of backends available here: https://www.pantsbuild.org/2.21/docs/using-pants/key-concepts/backends
 backend_packages = [
     # Build Files (Pants)
     "pants.backend.build_files.fmt.ruff",
@@ -13,4 +14,11 @@ backend_packages = [
 
 
 [python]
+
+# Pants recommends restricting to a single minor version.
 interpreter_constraints = ['==3.12.*']
+
+# Enable the "resolves" mechanism, which turns on lockfiles for user code. See
+# https://www.pantsbuild.org/docs/python-third-party-dependencies. This also adds the
+# `generate-lockfiles` goal for Pants to generate the lockfile for you.
+enable_resolves = true
