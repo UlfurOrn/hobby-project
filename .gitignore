@@ -1,5 +1,11 @@
+# Python
+__pycache__
+
+
+# Pycharm
 .idea
 
-# Pants workspace files
+
+# Pants
 /.pants.d
 /dist/
