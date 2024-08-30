@@ -11,7 +11,9 @@ package-mode = false
 python = "^3.12"
 fastapi = { extras = ["standard"], version = "^0.112.2" }
 pydantic = "^2.8.2"
+pydantic-settings = "^2.4.0"
 scrapy = "^2.11.2"
+sqlalchemy = "^2.0.32"
 uvicorn = { extras = ["standard"], version = "^0.30.6" }
 
 [tool.poetry.group.dev.dependencies]
