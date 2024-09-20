@@ -1,66 +1,51 @@
 from typing import Callable
 
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker, create_async_engine
-from sqlalchemy.orm import DeclarativeBase
 
 from shared.database.config import BaseDatabaseConfig
+
+INIT_DATABASE = "Missing call to init_database"
+
 
 _db_engine: AsyncEngine | None = None
 _db_session_factory: Callable[..., AsyncSession] | None = None
 
 
 def init_database(config: BaseDatabaseConfig) -> None:
-    engine = create_async_engine(config.url)
-
-    set_db_engine(engine)
-
-    # session = async_sessionmaker(engine)
-
-
-def set_db_engine(engine: AsyncEngine) -> None:
     global _db_engine, _db_session_factory
 
-    _db_engine = engine
-    _db_session_factory = async_sessionmaker(engine, expire_on_commit=False)
+    if _db_engine is not None:
+        raise ValueError("init_database has already been called")
+
+    _db_engine = create_async_engine(config.url, **config.engine_configuration_options)
+    _db_session_factory = async_sessionmaker(_db_engine, **config.session_configuration_options)
+
+
+async def close_database() -> None:
+    global _db_engine, _db_session_factory
+
+    if _db_engine is None:
+        raise ValueError("Database connection was either never established or has already been closed")
+
+    await _db_engine.dispose()
+
+    _db_engine = None
+    _db_session_factory = None
 
 
 def get_db_engine() -> AsyncEngine:
-    global _db_engine
-
-    if not _db_engine:
-        raise ValueError("Must call init_database")
-
+    if _db_engine is None:
+        raise ValueError(INIT_DATABASE)
     return _db_engine
 
 
-if __name__ == "__main__":
+def get_db_session_factory() -> Callable[..., AsyncSession]:
+    if _db_session_factory is None:
+        raise ValueError(INIT_DATABASE)
+    return _db_session_factory
 
-    class ThisModel(DeclarativeBase):
-        pass
 
-    class OtherModel(DeclarativeBase):
-        pass
-
-    class ThirdModel(DeclarativeBase):
-        pass
-
-    config = BaseDatabaseConfig(
-        drivername="mysql",
-        username="username",
-        password="password",
-        host="host",
-        port=1,
-        database="database",
-        base_model=ThisModel,
-    )
-
-    init_database(config)
-
-    other_config = config.__deepcopy__()
-    other_config.base_model = OtherModel
-
-    init_database(other_config)
-
-    print(get_db_engine(ThisModel))
-    print(get_db_engine(OtherModel))
-    print(get_db_engine(ThirdModel))
+def get_db_session() -> AsyncSession:
+    if _db_session_factory is None:
+        raise ValueError(INIT_DATABASE)
+    return _db_session_factory()

@@ -1,7 +1,8 @@
-from pydantic import SecretStr
+from typing import Any
+
+from pydantic import Field, SecretStr
 from pydantic_settings import BaseSettings
 from sqlalchemy import URL
-from sqlalchemy.orm import DeclarativeBase
 
 
 class BaseDatabaseConfig(BaseSettings):
@@ -12,7 +13,10 @@ class BaseDatabaseConfig(BaseSettings):
     port: int
     database: str
 
-    base_model: type[DeclarativeBase]
+    # Available Options: https://docs.sqlalchemy.org/en/20/core/engines.html#
+    engine_configuration_options: dict[str, Any] = Field(default_factory=dict)
+    # Available Options: https://docs.sqlalchemy.org/en/20/orm/session_api.html#sqlalchemy.orm.Session
+    session_configuration_options: dict[str, Any] = Field(default_factory=dict)
 
     @property
     def url(self) -> URL:
@@ -24,21 +28,3 @@ class BaseDatabaseConfig(BaseSettings):
             port=self.port,
             database=self.database,
         )
-
-
-if __name__ == "__main__":
-
-    class MyModel(DeclarativeBase):
-        pass
-
-    print(
-        BaseDatabaseConfig(
-            drivername="mysql",
-            username="username",
-            password="password",
-            host="host",
-            port=1,
-            database="database",
-            base_model=MyModel,
-        ).url
-    )
