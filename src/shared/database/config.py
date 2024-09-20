@@ -7,11 +7,11 @@ from sqlalchemy import URL
 
 class BaseDatabaseConfig(BaseSettings):
     drivername: str
-    username: str
-    password: SecretStr
-    host: str
-    port: int
-    database: str
+    username: str | None = None
+    password: SecretStr | None = None
+    host: str | None = None
+    port: int | None = None
+    database: str | None = None
 
     # Available Options: https://docs.sqlalchemy.org/en/20/core/engines.html#
     engine_configuration_options: dict[str, Any] = Field(default_factory=dict)
@@ -20,10 +20,14 @@ class BaseDatabaseConfig(BaseSettings):
 
     @property
     def url(self) -> URL:
+        password = None
+        if isinstance(self.password, SecretStr):
+            password = self.password.get_secret_value()
+
         return URL.create(
             drivername=self.drivername,
             username=self.username,
-            password=self.password.get_secret_value(),
+            password=password,
             host=self.host,
             port=self.port,
             database=self.database,
