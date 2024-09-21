@@ -24,6 +24,7 @@ pytest-randomly = "^3.15.0"
 pytest-sugar = "^1.0.0"
 ruff = "^0.6.2"
 
+
 [tool.ruff]
 src = ["src/python"]
 line-length = 120
@@ -47,6 +48,7 @@ fixable = [
     "I001", # unsorted-imports: https://docs.astral.sh/ruff/rules/unsorted-imports/
 ]
 
+
 [tool.pytest.ini_options]
 pythonpath = [
     "src", # Code under test
@@ -58,6 +60,7 @@ testpaths = [
 
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "session"
+
 
 [build-system]
 requires = ["poetry-core"]
