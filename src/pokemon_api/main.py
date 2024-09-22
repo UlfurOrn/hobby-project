@@ -6,6 +6,7 @@ from fastapi import FastAPI
 from shared.database.database import close_database, init_database
 
 from pokemon_api.config import ServiceConfig
+from pokemon_api.routers.api import api_router
 
 
 @asynccontextmanager
@@ -28,6 +29,8 @@ app = FastAPI(
     port=8000,
     lifespan=lifespan,
 )
+
+app.include_router(api_router)
 
 
 if __name__ == "__main__":
