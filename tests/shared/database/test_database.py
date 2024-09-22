@@ -2,13 +2,14 @@ import pytest
 import sqlalchemy
 from shared.database.config import BaseDatabaseConfig
 from shared.database.database import (
+    DATABASE_ALREADY_INITIALIZED,
+    DATABASE_NOT_INITIALIZED,
     close_database,
     get_db_engine,
     get_db_session,
     get_db_session_factory,
     init_database,
 )
-from shared.database.exceptions import DatabaseAlreadyInitializedError, DatabaseNotInitializedError
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker
 
 
@@ -25,7 +26,7 @@ async def database(config):
 
     try:
         await close_database()
-    except DatabaseNotInitializedError:
+    except RuntimeError:
         pass  # Database already closed
 
 
@@ -60,7 +61,7 @@ async def test_get_db_session(database):
 
 def test_init_database_twice(database, config):
     # Database already initialized once via database fixture
-    with pytest.raises(DatabaseAlreadyInitializedError):
+    with pytest.raises(RuntimeError, match=DATABASE_ALREADY_INITIALIZED):
         init_database(config)
 
 
@@ -69,32 +70,32 @@ async def test_close_database(database):
 
     await close_database()
 
-    with pytest.raises(DatabaseNotInitializedError):
+    with pytest.raises(RuntimeError, match=DATABASE_NOT_INITIALIZED):
         get_db_engine()
 
-    with pytest.raises(DatabaseNotInitializedError):
+    with pytest.raises(RuntimeError, match=DATABASE_NOT_INITIALIZED):
         get_db_session_factory()
 
-    with pytest.raises(DatabaseNotInitializedError):
+    with pytest.raises(RuntimeError, match=DATABASE_NOT_INITIALIZED):
         get_db_session()
 
 
 async def test_close_database_twice(database):
     await close_database()
 
-    with pytest.raises(DatabaseNotInitializedError):
+    with pytest.raises(RuntimeError, match=DATABASE_NOT_INITIALIZED):
         await close_database()
 
 
 async def test_use_without_initialization():
-    with pytest.raises(DatabaseNotInitializedError):
+    with pytest.raises(RuntimeError, match=DATABASE_NOT_INITIALIZED):
         get_db_engine()
 
-    with pytest.raises(DatabaseNotInitializedError):
+    with pytest.raises(RuntimeError, match=DATABASE_NOT_INITIALIZED):
         get_db_session_factory()
 
-    with pytest.raises(DatabaseNotInitializedError):
+    with pytest.raises(RuntimeError, match=DATABASE_NOT_INITIALIZED):
         get_db_session()
 
-    with pytest.raises(DatabaseNotInitializedError):
+    with pytest.raises(RuntimeError, match=DATABASE_NOT_INITIALIZED):
         await close_database()
