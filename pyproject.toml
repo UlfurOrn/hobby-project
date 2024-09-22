@@ -9,13 +9,21 @@ package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.12"
-fastapi = { extras = ["standard"], version = "^0.112.2" }
-pydantic = "^2.8.2"
+fastapi = { extras = ["standard"], version = "^0.115.0" }
+pydantic = "^2.9.2"
+pydantic-settings = "^2.5.2"
 scrapy = "^2.11.2"
+sqlalchemy = { extras = ["asyncio"], version = "^2.0.35" }
 uvicorn = { extras = ["standard"], version = "^0.30.6" }
 
 [tool.poetry.group.dev.dependencies]
+aiosqlite = "^0.20.0"
+pytest = "^8.3.3"
+pytest-asyncio = "^0.24.0"
+pytest-randomly = "^3.15.0"
+pytest-sugar = "^1.0.0"
 ruff = "^0.6.2"
+
 
 [tool.ruff]
 src = ["src/python"]
@@ -36,9 +44,23 @@ select = [
     "Q",
 ]
 fixable = [
-    "F401",  # unused-import: https://docs.astral.sh/ruff/rules/unused-import/
-    "I001",  # unsorted-imports: https://docs.astral.sh/ruff/rules/unsorted-imports/
+    "F401", # unused-import: https://docs.astral.sh/ruff/rules/unused-import/
+    "I001", # unsorted-imports: https://docs.astral.sh/ruff/rules/unsorted-imports/
 ]
+
+
+[tool.pytest.ini_options]
+pythonpath = [
+    "src", # Code under test
+    ".", # Makes tests.foo importable
+]
+testpaths = [
+    "tests"
+]
+
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "session"
+
 
 [build-system]
 requires = ["poetry-core"]
