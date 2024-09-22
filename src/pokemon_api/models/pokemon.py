@@ -16,3 +16,6 @@ class PokemonDB(BaseDB):
     special_attack: Mapped[int]
     special_defence: Mapped[int]
     speed: Mapped[int]
+
+    # TODO: Try out replacing this field with a "hybrid property" calculated from the above values
+    total: Mapped[int]
