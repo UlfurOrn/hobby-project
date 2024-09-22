@@ -9,6 +9,7 @@ package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.12"
+asyncpg = "^0.29.0"
 fastapi = { extras = ["standard"], version = "^0.115.0" }
 pydantic = "^2.9.2"
 pydantic-settings = "^2.5.2"
@@ -23,7 +24,6 @@ pytest-asyncio = "^0.24.0"
 pytest-randomly = "^3.15.0"
 pytest-sugar = "^1.0.0"
 ruff = "^0.6.2"
-
 
 [tool.ruff]
 src = ["src/python"]
@@ -48,7 +48,6 @@ fixable = [
     "I001", # unsorted-imports: https://docs.astral.sh/ruff/rules/unsorted-imports/
 ]
 
-
 [tool.pytest.ini_options]
 pythonpath = [
     "src", # Code under test
@@ -60,7 +59,6 @@ testpaths = [
 
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "session"
-
 
 [build-system]
 requires = ["poetry-core"]

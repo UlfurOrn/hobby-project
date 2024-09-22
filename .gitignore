@@ -9,3 +9,8 @@ __pycache__
 # Pants
 /.pants.d
 /dist/
+
+
+# env files
+*.env
+!*example.env
