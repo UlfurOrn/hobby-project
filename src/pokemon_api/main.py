@@ -21,7 +21,14 @@ async def lifespan(app: FastAPI):
     await close_database()
 
 
-app = FastAPI(host="127.0.0.1", port=8000, title="Pokemon API", version="0.0.0", lifespan=lifespan)
+app = FastAPI(
+    title="Pokemon API",
+    version="0.0.0",
+    host="127.0.0.1",
+    port=8000,
+    lifespan=lifespan,
+)
+
 
 if __name__ == "__main__":
     uvicorn.run(app)
