@@ -1,0 +1,16 @@
+services:
+  database:
+    # https://github.com/docker-library/docs/blob/master/postgres/README.md
+    image: postgres:16
+    environment:
+      # https://github.com/docker-library/docs/blob/master/postgres/README.md#environment-variables
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      # https://github.com/docker-library/docs/blob/master/postgres/README.md#where-to-store-data
+      - "./docker-compose/db_volume:/var/lib/postgresql/data"
+      # https://github.com/docker-library/docs/blob/master/postgres/README.md#initialization-scripts
+      - "./docker-compose/db_init:/docker-entrypoint-initdb.d"

@@ -30,13 +30,15 @@ def get_db_session(**session_configuration_option_overrides) -> AsyncSession:
     return _db_session_factory(**session_configuration_option_overrides)
 
 
-def init_database(config: BaseDatabaseConfig) -> None:
+def init_database(config: BaseDatabaseConfig, **engine_configuration_option_overrides) -> None:
     global _db_engine, _db_session_factory
 
     if _db_engine is not None:
         raise RuntimeError(DATABASE_ALREADY_INITIALIZED)
 
-    _db_engine = create_async_engine(config.url, **config.engine_configuration_options)
+    _db_engine = create_async_engine(
+        config.url, **config.engine_configuration_options, **engine_configuration_option_overrides
+    )
     _db_session_factory = async_sessionmaker(_db_engine, **config.session_configuration_options)
 
 
