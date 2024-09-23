@@ -1,7 +1,9 @@
 services:
   database:
+    # https://github.com/docker-library/docs/blob/master/postgres/README.md
     image: postgres:16
     environment:
+      # https://github.com/docker-library/docs/blob/master/postgres/README.md#environment-variables
       POSTGRES_USER: username
       POSTGRES_PASSWORD: password
       POSTGRES_DB: postgres

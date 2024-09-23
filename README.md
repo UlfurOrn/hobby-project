@@ -46,7 +46,6 @@ The `current` command can be used to check the current version (revision) of the
 alembic current
 ```
 
-
 #### History
 
 The `history` command can be used to list all versions (revisions) of the database:
