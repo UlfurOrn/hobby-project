@@ -9,6 +9,8 @@ from typing import Sequence, Union
 
 import sqlalchemy as sa
 from alembic import op
+from pokemon_api.models.pokemon import PokemonDB
+from sqlalchemy import select
 
 # revision identifiers, used by Alembic.
 revision: str = "a74367808480"
