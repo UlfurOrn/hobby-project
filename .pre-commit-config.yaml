@@ -1,7 +1,9 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
 
-fail_fast: false
+# Some hooks depend on specific versions of python (and other languages), lock the versions here to avoid issues.
+default_language_version:
+    python: python3.12
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
