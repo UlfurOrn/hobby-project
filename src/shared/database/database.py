@@ -1,5 +1,6 @@
 from typing import Callable
 
+from loguru import logger
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker, create_async_engine
 
 from shared.database.config import BaseDatabaseConfig
@@ -36,6 +37,8 @@ def init_database(config: BaseDatabaseConfig, **engine_configuration_option_over
     if _db_engine is not None:
         raise RuntimeError(DATABASE_ALREADY_INITIALIZED)
 
+    logger.info("Creating DB engine", url=config.url)
+
     _db_engine = create_async_engine(
         config.url, **config.engine_configuration_options, **engine_configuration_option_overrides
     )
@@ -47,6 +50,8 @@ async def close_database() -> None:
 
     if _db_engine is None:
         raise RuntimeError(DATABASE_NOT_INITIALIZED)
+
+    logger.info("Closing DB engine")
 
     await _db_engine.dispose()
 

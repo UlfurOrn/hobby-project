@@ -14,3 +14,7 @@ __pycache__
 # env files
 *.env
 !*example.env
+
+
+# log files
+*.log
