@@ -35,7 +35,7 @@ alembic upgrade abcdef123456  # Upgrade the database to a specific revision
 alembic downgrade abcdef123456  # Downgrade the database to a specific revision
 
 alembic upgrade head  # Upgrade the database to the most recent revision
-alembic downgrade base  # Downgrade the database to before the first revision (essentially into the state before alembic was introduced) 
+alembic downgrade base  # Downgrade the database to before the first revision (essentially into the state before alembic was introduced)
 ```
 
 #### Current
