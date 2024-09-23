@@ -1,3 +1,4 @@
+from pydantic import BaseModel
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 
@@ -19,3 +20,16 @@ class PokemonDB(BaseDB):
 
     # TODO: Try out replacing this field with a "hybrid property" calculated from the above values
     total: Mapped[int]
+
+
+class Pokemon(BaseModel):
+    name: str
+
+    health: int
+    attack: int
+    defence: int
+    special_attack: int
+    special_defence: int
+    speed: int
+
+    total: int
