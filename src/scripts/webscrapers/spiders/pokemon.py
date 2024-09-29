@@ -37,4 +37,5 @@ class PokemonSpider(Spider):
                 "special_defence": special_defence_stat_column.css("::text").get(),
                 "speed": speed_stat_column.css("::text").get(),
                 "image": id_column.css("img::attr(src)").get(),
+                "is_variation": bool(name_column.css("small::text").get()),
             }
