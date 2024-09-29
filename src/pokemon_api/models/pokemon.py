@@ -36,3 +36,5 @@ class Pokemon(BaseModel):
     speed: int
 
     total: int
+
+    types: list[str]
