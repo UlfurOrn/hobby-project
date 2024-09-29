@@ -1,6 +1,6 @@
-from typing import Iterable
+from typing import Annotated, Iterable
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 from sqlalchemy import select
 
 from pokemon_api.dependencies import DBSessionDep
@@ -10,8 +10,20 @@ router = APIRouter()
 
 
 @router.get("", response_model=list[Pokemon])
-async def get_pokemon(db_session: DBSessionDep) -> Iterable[PokemonDB]:
+async def get_pokemon(
+    db_session: DBSessionDep,
+    name_prefix: Annotated[str, Query(description="The name prefix to filter the Pokémon by.")] = None,
+    total_min: Annotated[int, Query(description="The minimum total stats to filter the Pokémon by.", ge=0)] = 0,
+    total_max: Annotated[int, Query(description="The minimum total stats to filter the Pokémon by.", ge=0)] = 1000000,
+) -> Iterable[PokemonDB]:
     query = select(PokemonDB)
+
+    if name_prefix is not None:
+        name_prefix_filter = f"{name_prefix.lower()}%"
+        query = query.where(PokemonDB.name.like(name_prefix_filter))
+
+    query = query.where(PokemonDB.total.between(total_min, total_max))
+
     result = await db_session.scalars(query)
 
     return result.all()
