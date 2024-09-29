@@ -28,7 +28,7 @@ class PokemonSpider(Spider):
                 "id": id_column.css("span::text").get(),
                 "name": name_column.css("a::text").get(),
                 "href": name_column.css("a::attr(href)").get(),
-                "types": name_column.css("a::attr(href)").get(),
+                "types": type_column.css("a::text").getall(),
                 "total": total_stat_column.css("::text").get(),
                 "health": health_stat_column.css("::text").get(),
                 "attack": attack_stat_column.css("::text").get(),
