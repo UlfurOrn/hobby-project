@@ -26,7 +26,7 @@ class PokemonSpider(Spider):
 
             yield {
                 "id": id_column.css("span::text").get(),
-                "name": name_column.css("a::text").get(),
+                "name": name_column.css("a::text").get().lower(),
                 "href": name_column.css("a::attr(href)").get(),
                 "types": type_column.css("a::text").getall(),
                 "total": total_stat_column.css("::text").get(),
