@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from sqlalchemy import ARRAY, String
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 
@@ -20,6 +21,8 @@ class PokemonDB(BaseDB):
 
     # TODO: Try out replacing this field with a "hybrid property" calculated from the above values
     total: Mapped[int]
+
+    types: Mapped[list[str]] = mapped_column(ARRAY(String))
 
 
 class Pokemon(BaseModel):
