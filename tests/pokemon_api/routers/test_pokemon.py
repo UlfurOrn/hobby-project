@@ -1,5 +1,5 @@
 import pytest
-from dirty_equals import IsDict, IsInt, IsList
+from dirty_equals import IsDict, IsInstance, IsInt
 from pokemon_api.models.pokemon import PokemonDB
 
 
@@ -49,14 +49,14 @@ async def pokemon(db_session):
 def IsPokemon(name: str) -> IsDict:
     return IsDict(
         name=name,
-        types=IsList,
-        total=IsInt,
-        health=IsInt,
-        attack=IsInt,
-        defence=IsInt,
-        special_attack=IsInt,
-        special_defence=IsInt,
-        speed=IsInt,
+        types=IsInstance(list),
+        total=IsInt(),
+        health=IsInt(),
+        attack=IsInt(),
+        defence=IsInt(),
+        special_attack=IsInt(),
+        special_defence=IsInt(),
+        speed=IsInt(),
     )
 
 
