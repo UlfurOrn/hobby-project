@@ -20,12 +20,14 @@ uvicorn = { extras = ["standard"], version = "^0.30.6" }
 [tool.poetry.group.dev.dependencies]
 aiosqlite = "^0.20.0"
 alembic = "^1.13.2"
+dirty-equals = "^0.8.0"
 pre-commit = "^3.8.0"
 pytest = "^8.3.3"
 pytest-asyncio = "^0.24.0"
 pytest-randomly = "^3.15.0"
 pytest-sugar = "^1.0.0"
 ruff = "^0.6.2"
+testcontainers = {extras = ["postgresql"], version = "^4.8.1"}
 
 [tool.ruff]
 src = ["src/python"]

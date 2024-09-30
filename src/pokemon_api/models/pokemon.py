@@ -22,8 +22,7 @@ class PokemonDB(BaseDB):
     # TODO: Try out replacing this field with a "hybrid property" calculated from the above values
     total: Mapped[int]
 
-    # SQLite does not support Arrays directly, so we use a String column instead when unit testing
-    types: Mapped[list[str]] = mapped_column(ARRAY(String).with_variant(String, "sqlite"))
+    types: Mapped[list[str]] = mapped_column(ARRAY(String))
 
 
 class Pokemon(BaseModel):
