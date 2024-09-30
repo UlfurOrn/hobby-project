@@ -1,5 +1,12 @@
 # hobby-project
-A hobby project to try out some stuff
+
+Welcome to my Hobby Project 👋
+
+This is where I'm working on creating various side projects to hone my skills and try out some new tools.
+
+Currently, it does not have the most user-friendly setup process but that is something I want to fix in the future.
+
+Otherwise, feel free to browse the project and see what I'm up to 🙏
 
 ## Setup
 
