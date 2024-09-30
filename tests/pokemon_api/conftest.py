@@ -8,7 +8,7 @@ from shared.database.database import close_database, get_db_engine, get_db_sessi
 from sqlalchemy import delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
-### Database ###
+# # # Database # # #
 
 
 @pytest.fixture(scope="session")
@@ -59,7 +59,7 @@ async def db_session(clean_database) -> AsyncSession:
         yield session
 
 
-### API ###
+# # # API # # #
 
 
 @pytest.fixture
