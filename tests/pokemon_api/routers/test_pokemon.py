@@ -119,7 +119,7 @@ async def test_get_pokemon__filtered_by_stats__max_smaller_than_min(api_client):
     response = await api_client.get("/pokemon", params={"total_min": 500, "total_max": 400})
 
     assert response.status_code == 400
-    assert response.json() == {}
+    assert response.json() == {"detail": "total_max must be larger than total_min"}
 
 
 async def test_get_pokemon__filtered_by_name_and_stats(api_client):
