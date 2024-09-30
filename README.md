@@ -10,6 +10,10 @@ Otherwise, feel free to browse the project and see what I'm up to 🙏
 
 ## Setup
 
+This section will detail how to get the project running, currently this includes a Database and an API.
+
+
+
 ## Tools
 
 ### alembic
