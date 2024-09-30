@@ -6,7 +6,7 @@ class DatabaseConfig(BaseDatabaseConfig):
     """Subclass the BaseDatabaseConfig class to provide some defaults for the Pokemon API Database"""
 
     drivername: str = "postgresql+asyncpg"
-    database: str = "pokemon"
+    database: str | None = "pokemon"
 
     # Provide the env_prefix here so this config object can be loaded individually for DB migrations etc.
     model_config = SettingsConfigDict(env_prefix="POKEMON_API_DATABASE__")
