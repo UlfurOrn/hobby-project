@@ -69,3 +69,65 @@ async def test_get_pokemon(api_client):
         IsPokemon(name="ivysaur"),
         IsPokemon(name="venusaur"),
     ]
+
+
+async def test_get_pokemon__filtered_by_name_prefix(api_client):
+    response = await api_client.get("/pokemon", params={"name_prefix": "bulb"})
+
+    assert response.status_code == 200
+    assert response.json() == [
+        IsPokemon(name="bulbasaur"),
+        # IsPokemon(name="ivysaur"),  name prefix != bulb
+        # IsPokemon(name="venusaur"),  name prefix != bulb
+    ]
+
+
+async def test_get_pokemon__filtered_by_stats__total_min(api_client):
+    response = await api_client.get("/pokemon", params={"total_min": 400})
+
+    assert response.status_code == 200
+    assert response.json() == [
+        # IsPokemon(name="bulbasaur"),  total < 400
+        IsPokemon(name="ivysaur"),
+        IsPokemon(name="venusaur"),
+    ]
+
+
+async def test_get_pokemon__filtered_by_stats__total_max(api_client):
+    response = await api_client.get("/pokemon", params={"total_max": 500})
+
+    assert response.status_code == 200
+    assert response.json() == [
+        IsPokemon(name="bulbasaur"),
+        IsPokemon(name="ivysaur"),
+        # IsPokemon(name="venusaur"),  total > 500
+    ]
+
+
+async def test_get_pokemon__filtered_by_stats__total_min_and_max(api_client):
+    response = await api_client.get("/pokemon", params={"total_min": 400, "total_max": 500})
+
+    assert response.status_code == 200
+    assert response.json() == [
+        # IsPokemon(name="bulbasaur"),  total < 400
+        IsPokemon(name="ivysaur"),
+        # IsPokemon(name="venusaur"),  total > 500
+    ]
+
+
+async def test_get_pokemon__filtered_by_stats__max_smaller_than_min(api_client):
+    response = await api_client.get("/pokemon", params={"total_min": 500, "total_max": 400})
+
+    assert response.status_code == 400
+    assert response.json() == {}
+
+
+async def test_get_pokemon__filtered_by_name_and_stats(api_client):
+    response = await api_client.get("/pokemon", params={"name_prefix": "ivy", "total_min": 400, "total_max": 999})
+
+    assert response.status_code == 200
+    assert response.json() == [
+        # IsPokemon(name="bulbasaur"),  total < 400
+        IsPokemon(name="ivysaur"),
+        # IsPokemon(name="venusaur"),  name prefix != ivy
+    ]
