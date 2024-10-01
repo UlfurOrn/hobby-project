@@ -4,15 +4,16 @@ Welcome to my Hobby Project 👋
 
 This is where I'm working on creating various side projects to hone my skills and try out some new tools.
 
-Currently, it does not have the most user-friendly setup process but that is something I want to fix in the future.
+## Running Locally
 
-Otherwise, feel free to browse the project and see what I'm up to 🙏
+To run the project locally you should only need the [docker compose](https://docs.docker.com/compose/) CLI tool.
 
-## Setup
+Once installed run the following command to build the Database and API:
+```shell
+docker compose up
+```
 
-This section will detail how to get the project running, currently this includes a Database and an API.
-
-
+Then navigate to http://0.0.0.0:8000/docs to see the API documentation.
 
 ## Tools
 
