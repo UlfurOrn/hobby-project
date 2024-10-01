@@ -1,7 +1,19 @@
 # hobby-project
-A hobby project to try out some stuff
 
-## Setup
+Welcome to my Hobby Project 👋
+
+This is where I'm working on creating various side projects to hone my skills and try out some new tools.
+
+## Running Locally
+
+To run the project locally you should only need the [docker compose](https://docs.docker.com/compose/) CLI tool.
+
+Once installed run the following command to build the Database and API:
+```shell
+docker compose up
+```
+
+Then navigate to http://0.0.0.0:8000/docs to see the API documentation.
 
 ## Tools
 
