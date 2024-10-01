@@ -14,3 +14,18 @@ services:
       - "./docker-compose/db_volume:/var/lib/postgresql/data"
       # https://github.com/docker-library/docs/blob/master/postgres/README.md#initialization-scripts
       - "./docker-compose/db_init:/docker-entrypoint-initdb.d"
+
+  pokemon-api:
+    build:
+      context: .
+    environment:
+      - POKEMON_API_DATABASE__USERNAME=username
+      - POKEMON_API_DATABASE__PASSWORD=password
+      - POKEMON_API_DATABASE__HOST=database
+      - POKEMON_API_DATABASE__PORT=5432
+    depends_on:
+      database:
+        condition: service_started
+    ports:
+      - "8000:8000"
+    restart: always
